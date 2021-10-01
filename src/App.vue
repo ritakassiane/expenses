@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <base-spinner/>
-    <button @click="mostrarSpinner">Mostrar Reload</button>
-    <!-- <router-view/> -->
+    <router-view/>
   </div>
 </template>
 <script>
@@ -12,16 +11,14 @@ export default {
   name:'App',
   components: {
     BaseSpinner
-  },
-  methods: {
-    mostrarSpinner () {
-      // Emitindo um evento para ser escutado la no created do BaseSpinner
-      this.$root.$emit('Spinner::show')
-    }
   }
-
 }
 </script>
 <style lang="scss">
+#app {
+  min-height: 100vh;
+  color: var(--light);
+  background-color: var(--dark);
+}
 
 </style>

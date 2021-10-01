@@ -12,20 +12,19 @@ export default {
     },
     created () {
         //Quando o root ouvir uma ação chamadada Spinner::show
-        this.$root.$on('Spinner::show', () => {
-            this.visible = true
-        }) 
+        this.$root.$on('Spinner::show', this.alternarSpinner)
         //Quando o root ouvir uma ação chamadada Spinner::hide
-        this.$root.$on('Spinner::hide', () => {
-            this.visible = false
-        })
+        this.$root.$on('Spinner::hide', this.alternarSpinner)
+    },
+    methods: {
+        alternarSpinner () {
+            this.visible = !this.visible
+        }
     }
-
-    
 }
 </script>
 <style lang="scss" scoped>
-@import '../../assets/scss/variables';
+
 
 .base-spinner {
     top: 0;
@@ -39,8 +38,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: $dark-medium;
-    color: $featured;
+    background-color: var(--dark-medium);
+    color: var(--featured);
 }
 
 
