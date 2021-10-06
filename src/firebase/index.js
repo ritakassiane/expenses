@@ -17,9 +17,9 @@ export const firebaseApp = firebase.initializeApp({
 
 // A função abaixo vai ser utilizada pelo Vue para instalar um pluggin globalmente no Vue e nao precisar fazer o "Vue.user(plugin)", assim será possivel ter acessado ao firebase como root, podendo acessa-lo pelo $ / this
 export default function install (Vue) {
-    Object.defineProperty(Vue.prototype, '$firebase', {
-      get () {
-        return firebaseApp
-      }
-    })
-  }     
+  Object.defineProperty(Vue.prototype, '$firebase', {
+    get () {
+      return firebaseApp
+    }
+  })
+}
