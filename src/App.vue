@@ -14,6 +14,20 @@ export default {
   },
   mounted () {
     console.log(this.$firebase)
+    this.$firebase.auth().onAuthStateChanged(user => {
+      window.uid = user ? user.uid : null // [operação ternária] Se user existir, pegue o valor user.uid dele e coloque em window.uid. Se não diga que window.uid = null
+      console.log(window.uid)
+      this.$router.push({ name: window.uid ? 'home' : 'login' })
+      this.$root.$emit('Spinner::hide')
+
+      
+
+      // if (window.uid) {
+      //   this.$router.push({ name: 'home' })
+      // }else {
+      //   this.$router.push({ name: 'login' })
+      // }
+    })
   }
 }
 </script>

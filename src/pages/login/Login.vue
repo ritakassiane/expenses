@@ -23,8 +23,15 @@
                     v-model="password"
                     >
                 </div>
-                <button class="btn btn-primary w-100"> 
-                Entrar
+                <button class="btn btn-primary w-100" :disabled='loading'> 
+                    <template v-if="loading">
+                        Entrando
+                        <i class="fa fa-spinner fa-spin"></i>
+                    </template>
+                    <template v-else>                    
+                        Entrar
+                        <i class="fa fa-sign-in-alt"></i>
+                    </template>
                 </button>
             </div>
         </div>
@@ -35,22 +42,37 @@ export default {
     name: 'Login',
     data: () => {
         return {
-            email: '',
-            password: ''
+            loading: false,
+            email: 'rita@admin.com',
+            password: '123456789'
         }
     },
     methods: {
         async doLogin () { 
-
+            this.loading = true
             const { email, password } = this // const email = this.email 
             try {
                 console.log(this.$firebase.auth)
               const res =  await this.$firebase.auth().signInWithEmailAndPassword(email, password)
               console.log(res)
+
+              window.uid = res.user.uid // Window é variavel mais alto nivel do JS, quando o uid esta vazio, significa que o usuario n ta logado. Portanto, 
+            //   this.$router.push({ name: 'home' })
             }catch (err) {
                 console.log(err)
             }
+
+            this.loading = false
         }
+    },
+    // Antes da rota chamada rolar
+    beforeRouteEnter(to, from, next ) {
+        next(vm => {
+            if (window.uid){
+                vm.$router.push( { name: 'home' } )
+            }
+        })
+
     }
 }
 </script>

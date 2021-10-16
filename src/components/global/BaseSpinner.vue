@@ -7,14 +7,14 @@
 export default {
     data () {
         return{
-            visible: false
+            visible: true
         }
     },
     created () {
         //Quando o root ouvir uma ação chamadada Spinner::show
-        this.$root.$on('Spinner::show', this.alternarSpinner)
+        this.$root.$on('Spinner::show', () => { this.visible = true})
         //Quando o root ouvir uma ação chamadada Spinner::hide
-        this.$root.$on('Spinner::hide', this.alternarSpinner)
+        this.$root.$on('Spinner::hide', () => { this.visible = false})
     },
     methods: {
         alternarSpinner () {

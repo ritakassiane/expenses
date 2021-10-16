@@ -1,28 +1,36 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 
+Vue.use(Router)
 
-Vue.use(VueRouter)
-
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    meta: {
-      icon: 'home', title: 'Home'
+const router = new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      meta: {
+        icon: 'home', title: 'Home'
+      },
+      component: () => import(/* webpackChunkName: "home" */ '../pages/home/Home')
     },
-    component: () => import(/* webpackChunkName: "home" */ '../pages/home/Home')
-  },
-  {
-    path: '/login',
-    name: 'Login',   
-    component: () => import(/* webpackChunkName: "login" */ '../pages/login/Login')
-  } 
+    {
+      name: 'login',
+      path: '/login',
+      meta: { title: 'Login' },
+      component: () => import(/* webpackChunkName: "login" */ '../pages/login/Login')
+    }
+  ]
+})
 
-]
-
-const router = new VueRouter({
-  routes
+// Cada vez que uma rota for chamada o beforeEach vai ser chamado antes de exibi-la
+router.beforeEach((to, from, next) => {
+  if (!window.uid && to.name !== 'login'){
+    console.log('Entrou aqui')
+    console.log(next)
+    next({ name: 'login' })
+  }else{
+    next()
+  }
 })
 
 export default router
